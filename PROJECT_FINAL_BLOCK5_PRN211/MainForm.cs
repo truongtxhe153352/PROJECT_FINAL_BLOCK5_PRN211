@@ -21,5 +21,10 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
 
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

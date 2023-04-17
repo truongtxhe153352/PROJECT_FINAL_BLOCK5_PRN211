@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
             button5 = new Button();
+            button4 = new Button();
+            button3 = new Button();
+            button2 = new Button();
+            button1 = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -50,14 +50,32 @@
             panel1.Size = new Size(878, 125);
             panel1.TabIndex = 0;
             // 
-            // button1
+            // button5
             // 
-            button1.Location = new Point(31, 40);
-            button1.Name = "button1";
-            button1.Size = new Size(110, 49);
-            button1.TabIndex = 0;
-            button1.Text = "Products";
-            button1.UseVisualStyleBackColor = true;
+            button5.Location = new Point(736, 40);
+            button5.Name = "button5";
+            button5.Size = new Size(113, 49);
+            button5.TabIndex = 4;
+            button5.Text = "Orders";
+            button5.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(198, 40);
+            button4.Name = "button4";
+            button4.Size = new Size(108, 49);
+            button4.TabIndex = 3;
+            button4.Text = "Customers";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(560, 40);
+            button3.Name = "button3";
+            button3.Size = new Size(110, 49);
+            button3.TabIndex = 2;
+            button3.Text = "Users";
+            button3.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -69,32 +87,14 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // button3
+            // button1
             // 
-            button3.Location = new Point(560, 40);
-            button3.Name = "button3";
-            button3.Size = new Size(110, 49);
-            button3.TabIndex = 2;
-            button3.Text = "Users";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(198, 40);
-            button4.Name = "button4";
-            button4.Size = new Size(108, 49);
-            button4.TabIndex = 3;
-            button4.Text = "Customers";
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(736, 40);
-            button5.Name = "button5";
-            button5.Size = new Size(113, 49);
-            button5.TabIndex = 4;
-            button5.Text = "Orders";
-            button5.UseVisualStyleBackColor = true;
+            button1.Location = new Point(31, 40);
+            button1.Name = "button1";
+            button1.Size = new Size(110, 49);
+            button1.TabIndex = 0;
+            button1.Text = "Products";
+            button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -104,6 +104,7 @@
             Controls.Add(panel1);
             Name = "MainForm";
             Text = "MainForm";
+            Load += MainForm_Load;
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
