@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace PROJECT_FINAL_BLOCK5_PRN211.Models
 {
@@ -25,26 +24,21 @@ namespace PROJECT_FINAL_BLOCK5_PRN211.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            Console.WriteLine(Directory.GetCurrentDirectory());
-            IConfiguration config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", true, true)
-            .Build();
-            var strConn = config["ConnectionStrings:QuanLyKho"];
-            optionsBuilder.UseSqlServer(strConn);
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server=TRUONGTRINH\\SQLEXPRESS;database=QuanLyKho;uid=sa;pwd=123;TrustServerCertificate=True;");
+            }
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TbCategory>(entity =>
             {
                 entity.HasKey(e => e.Catid)
-                    .HasName("PK__TbCatego__6A1D86D2C5135C35");
+                    .HasName("PK__TbCatego__6A1D86D2D37EA2EB");
 
                 entity.ToTable("TbCategory");
-
-                entity.Property(e => e.Catid).ValueGeneratedNever();
 
                 entity.Property(e => e.Catname).HasMaxLength(50);
             });
@@ -52,11 +46,9 @@ namespace PROJECT_FINAL_BLOCK5_PRN211.Models
             modelBuilder.Entity<TbCustomer>(entity =>
             {
                 entity.HasKey(e => e.Cid)
-                    .HasName("PK__TbCustom__C1FFD8618D0C8F27");
+                    .HasName("PK__TbCustom__C1FFD861CF0FBA87");
 
                 entity.ToTable("TbCustomer");
-
-                entity.Property(e => e.Cid).ValueGeneratedNever();
 
                 entity.Property(e => e.Cname).HasMaxLength(100);
 
@@ -66,11 +58,9 @@ namespace PROJECT_FINAL_BLOCK5_PRN211.Models
             modelBuilder.Entity<TbOrder>(entity =>
             {
                 entity.HasKey(e => e.Orderid)
-                    .HasName("PK__TbOrder__C39F40170B41C7B4");
+                    .HasName("PK__TbOrder__C39F4017ABEDEE43");
 
                 entity.ToTable("TbOrder");
-
-                entity.Property(e => e.Orderid).ValueGeneratedNever();
 
                 entity.Property(e => e.Odate).HasColumnType("datetime");
 
@@ -86,11 +76,9 @@ namespace PROJECT_FINAL_BLOCK5_PRN211.Models
             modelBuilder.Entity<TbProduct>(entity =>
             {
                 entity.HasKey(e => e.Pid)
-                    .HasName("PK__TbProduc__C5705938132241C3");
+                    .HasName("PK__TbProduc__C5705938517FF882");
 
                 entity.ToTable("TbProduct");
-
-                entity.Property(e => e.Pid).ValueGeneratedNever();
 
                 entity.Property(e => e.Pname).HasMaxLength(100);
 
@@ -102,11 +90,9 @@ namespace PROJECT_FINAL_BLOCK5_PRN211.Models
             modelBuilder.Entity<TbUser>(entity =>
             {
                 entity.HasKey(e => e.Userid)
-                    .HasName("PK__TbUser__1797D024A8B4D76D");
+                    .HasName("PK__TbUser__1797D024A6D21F38");
 
                 entity.ToTable("TbUser");
-
-                entity.Property(e => e.Userid).ValueGeneratedNever();
 
                 entity.Property(e => e.Fullname).HasMaxLength(100);
 
