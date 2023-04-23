@@ -74,7 +74,7 @@
             button3.Name = "button3";
             button3.Size = new Size(110, 49);
             button3.TabIndex = 2;
-            button3.Text = "Users";
+            button3.Text = "Managers";
             button3.UseVisualStyleBackColor = true;
             // 
             // button2
