@@ -104,6 +104,7 @@
             Controls.Add(panel1);
             Name = "MainForm";
             Text = "MainForm";
+            Load += MainForm_Load;
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
