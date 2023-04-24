@@ -58,6 +58,7 @@
             button5.TabIndex = 4;
             button5.Text = "Orders";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // button4
             // 
@@ -95,6 +96,7 @@
             button1.TabIndex = 0;
             button1.Text = "Products";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // MainForm
             // 

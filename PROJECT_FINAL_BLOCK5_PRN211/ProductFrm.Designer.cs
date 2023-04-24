@@ -36,7 +36,6 @@
             label6 = new Label();
             txtProductId = new TextBox();
             txtProductName = new TextBox();
-            txtQuantity = new TextBox();
             txtPrice = new TextBox();
             txtDescription = new TextBox();
             cbCategory = new ComboBox();
@@ -47,7 +46,10 @@
             btnDelete = new Button();
             btnUpdate = new Button();
             btnClear = new Button();
+            button1 = new Button();
+            numericQuantity = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)dtgProduct).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericQuantity).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -122,20 +124,13 @@
             txtProductName.Size = new Size(209, 27);
             txtProductName.TabIndex = 7;
             // 
-            // txtQuantity
-            // 
-            txtQuantity.Location = new Point(477, 35);
-            txtQuantity.Name = "txtQuantity";
-            txtQuantity.Size = new Size(209, 27);
-            txtQuantity.TabIndex = 8;
-            txtQuantity.TextChanged += textBox3_TextChanged;
-            // 
             // txtPrice
             // 
-            txtPrice.Location = new Point(477, 106);
+            txtPrice.Location = new Point(477, 95);
             txtPrice.Name = "txtPrice";
             txtPrice.Size = new Size(209, 27);
             txtPrice.TabIndex = 9;
+            txtPrice.TextChanged += txtPrice_TextChanged;
             // 
             // txtDescription
             // 
@@ -224,12 +219,31 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(29, 292);
+            button1.Name = "button1";
+            button1.Size = new Size(99, 50);
+            button1.TabIndex = 20;
+            button1.Text = "BACK";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // numericQuantity
+            // 
+            numericQuantity.Location = new Point(477, 31);
+            numericQuantity.Name = "numericQuantity";
+            numericQuantity.Size = new Size(209, 27);
+            numericQuantity.TabIndex = 21;
+            // 
             // ProductFrm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1097, 688);
+            Controls.Add(numericQuantity);
+            Controls.Add(button1);
             Controls.Add(btnClear);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
@@ -240,7 +254,6 @@
             Controls.Add(cbCategory);
             Controls.Add(txtDescription);
             Controls.Add(txtPrice);
-            Controls.Add(txtQuantity);
             Controls.Add(txtProductName);
             Controls.Add(txtProductId);
             Controls.Add(label6);
@@ -253,6 +266,7 @@
             Text = "ProductFrm";
             Load += ProductFrm_Load;
             ((System.ComponentModel.ISupportInitialize)dtgProduct).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericQuantity).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -267,7 +281,6 @@
         private Label label6;
         private TextBox txtProductId;
         private TextBox txtProductName;
-        private TextBox txtQuantity;
         private TextBox txtPrice;
         private TextBox txtDescription;
         private ComboBox cbCategory;
@@ -278,5 +291,7 @@
         private Button btnDelete;
         private Button btnUpdate;
         private Button btnClear;
+        private Button button1;
+        private NumericUpDown numericQuantity;
     }
 }

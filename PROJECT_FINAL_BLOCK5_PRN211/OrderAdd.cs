@@ -104,11 +104,23 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
             using (var context = new QuanLyKhoContext())
             {
-                var customer = (from c in context.TbCustomers
-                                where c.Cname.Contains(txtSearchCustomer.Text)
-                                select c).ToList();
+                if (!string.IsNullOrEmpty(txtSearchCustomer.Text))
+                {
+                    var customer = (from c in context.TbCustomers
+                                    where c.Cname.Contains(txtSearchCustomer.Text)
+                                    || c.Cphone.Contains(txtSearchCustomer.Text)
+                                    select c).ToList();
 
-                dtgCustomer.DataSource = customer;
+                    dtgCustomer.DataSource = customer;
+                }
+                else
+                {
+                    var customer = (from c in context.TbCustomers
+                                    select c).ToList();
+
+                    dtgCustomer.DataSource = customer;
+                }
+
             }
         }
 
@@ -116,20 +128,40 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
             using (var context = new QuanLyKhoContext())
             {
-                var data = (from item in context.TbProducts
-                            join item1 in context.TbCategories on item.Cateid equals item1.Catid
-                            where (item.Pname.Contains(txtSearchProduct.Text)) || (item.Pname.Contains((char)Convert.ToInt32(txtSearchProduct.Text)))
-                            select new
-                            {
-                                item.Pid,
-                                item.Pname,
-                                item.Pqty,
-                                item.Pprice,
-                                item.Pdescription,
-                                item1.Catname
-                            }).ToList();
+                if (!string.IsNullOrEmpty(txtSearchProduct.Text))
+                {
+                    var data = (from item in context.TbProducts
+                                join item1 in context.TbCategories on item.Cateid equals item1.Catid
+                                where (item.Pname.Contains(txtSearchProduct.Text))
+                                select new
+                                {
+                                    item.Pid,
+                                    item.Pname,
+                                    item.Pqty,
+                                    item.Pprice,
+                                    item.Pdescription,
+                                    item1.Catname
+                                }).ToList();
 
-                dtgProduct.DataSource = data;
+                    dtgProduct.DataSource = data;
+                }
+                else
+                {
+                    var data = (from item in context.TbProducts
+                                join item1 in context.TbCategories on item.Cateid equals item1.Catid
+                                select new
+                                {
+                                    item.Pid,
+                                    item.Pname,
+                                    item.Pqty,
+                                    item.Pprice,
+                                    item.Pdescription,
+                                    item1.Catname
+                                }).ToList();
+
+                    dtgProduct.DataSource = data;
+                }
+
             }
         }
 
@@ -137,6 +169,15 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
             using (var context = new QuanLyKhoContext())
             {
+                //  DialogResult result = MessageBox.Show("Bạn có muốn lưu cập nhật không?", "Thông báo", MessageBoxButtons.YesNo);
+                //bool queryCheck = (from o in context.TbOrders
+                //              join p in context.TbProducts
+                //              on o.Pid equals p.Pid
+                //              join c in context.TbCustomers 
+                //              on o.Cid equals c.Cid
+                //              select o
+                //              ).Any();
+
                 TbOrder tbOrder = new TbOrder();
                 tbOrder.Odate = dpkDateOrder.Value;
                 tbOrder.Pid = Convert.ToInt32(txtProductID.Text);
@@ -150,9 +191,53 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
                 context.SaveChanges();
                 MessageBox.Show("Order successfull!!!!!!");
                 OrderFrm orderFrm = new OrderFrm();
-                orderFrm.ShowDialog();
+                orderFrm.Show();
                 this.Hide();
             }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            OrderFrm orderFrm = new OrderFrm();
+            orderFrm.Show();
+            this.Hide();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            using (var context = new QuanLyKhoContext())
+            {
+                //TbOrder tbOrder = context.TbOrders.Find(
+                //    dt);
+                //tbOrder.Odate = dpkDateOrder.Value;
+                //tbOrder.Pid = Convert.ToInt32(txtProductID.Text);
+                //tbOrder.Cid = Convert.ToInt32(txtCustomerID.Text);
+                //tbOrder.Qty = Convert.ToInt32(numericQuantity.Value);
+                //tbOrder.Price = Convert.ToInt32(txtPrice.Text);
+
+                //MessageBox.Show("Are your sure Order???");
+
+                //context.TbOrders.Add(tbOrder);
+                //context.SaveChanges();
+                //MessageBox.Show("Order successfull!!!!!!");
+                //OrderFrm orderFrm = new OrderFrm();
+                //orderFrm.Show();
+                //this.Hide();
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtCustomerID.Clear();
+            txtCustomerName.Clear();
+            txtProductID.Clear();
+            txtProductName.Clear();
+            dpkDateOrder.Value = DateTime.Now;
+            txtPrice.Clear();
+            numericQuantity.Value = 0;
+            txtTotal.Clear();
+            txtSearchCustomer.Clear();
+            txtSearchProduct.Clear();
         }
     }
 }

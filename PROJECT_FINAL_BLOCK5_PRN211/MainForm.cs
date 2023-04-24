@@ -26,5 +26,18 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ProductFrm productFrm = new ProductFrm();
+            productFrm.Show();
+            this.Hide();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OrderFrm orderFrm = new OrderFrm();
+            orderFrm.Show(); this.Hide();
+        }
     }
 }
