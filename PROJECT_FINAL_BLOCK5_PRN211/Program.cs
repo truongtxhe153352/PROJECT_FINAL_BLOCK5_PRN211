@@ -1,3 +1,5 @@
+using QuanLyKho;
+
 namespace PROJECT_FINAL_BLOCK5_PRN211
 {
     internal static class Program
@@ -8,8 +10,6 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new MainForm());
         }
