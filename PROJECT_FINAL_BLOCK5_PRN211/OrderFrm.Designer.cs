@@ -32,13 +32,15 @@
             label2 = new Label();
             label3 = new Label();
             txtOrderId = new TextBox();
-            txtOrderQuantity = new TextBox();
             txtSearch = new TextBox();
             btnAdd = new Button();
             btnDelete = new Button();
             btnUpdate = new Button();
             dtgOrder = new DataGridView();
+            numericQuantity = new NumericUpDown();
+            btnBack = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgOrder).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericQuantity).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -76,13 +78,6 @@
             txtOrderId.Size = new Size(176, 27);
             txtOrderId.TabIndex = 3;
             // 
-            // txtOrderQuantity
-            // 
-            txtOrderQuantity.Location = new Point(161, 103);
-            txtOrderQuantity.Name = "txtOrderQuantity";
-            txtOrderQuantity.Size = new Size(176, 27);
-            txtOrderQuantity.TabIndex = 4;
-            // 
             // txtSearch
             // 
             txtSearch.Location = new Point(839, 153);
@@ -93,17 +88,17 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(42, 176);
+            btnAdd.Location = new Point(170, 176);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(100, 43);
+            btnAdd.Size = new Size(157, 43);
             btnAdd.TabIndex = 6;
-            btnAdd.Text = "ADD";
+            btnAdd.Text = "ADD NEW ORDER";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(382, 176);
+            btnDelete.Location = new Point(543, 176);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 43);
             btnDelete.TabIndex = 7;
@@ -113,7 +108,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(212, 176);
+            btnUpdate.Location = new Point(379, 176);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(93, 43);
             btnUpdate.TabIndex = 8;
@@ -133,17 +128,36 @@
             dtgOrder.CellClick += dtgOrder_CellClick;
             dtgOrder.CellContentClick += dtgOrder_CellContentClick;
             // 
+            // numericQuantity
+            // 
+            numericQuantity.Location = new Point(161, 101);
+            numericQuantity.Name = "numericQuantity";
+            numericQuantity.Size = new Size(176, 27);
+            numericQuantity.TabIndex = 10;
+            // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(21, 176);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(105, 43);
+            btnBack.TabIndex = 11;
+            btnBack.Text = "BACK";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
+            // 
             // OrderFrm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1056, 524);
+            Controls.Add(btnBack);
+            Controls.Add(numericQuantity);
             Controls.Add(dtgOrder);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(txtSearch);
-            Controls.Add(txtOrderQuantity);
             Controls.Add(txtOrderId);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -152,6 +166,7 @@
             Text = "OrderFrm";
             Load += OrderFrm_Load;
             ((System.ComponentModel.ISupportInitialize)dtgOrder).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericQuantity).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -162,11 +177,12 @@
         private Label label2;
         private Label label3;
         private TextBox txtOrderId;
-        private TextBox txtOrderQuantity;
         private TextBox txtSearch;
         private Button btnAdd;
         private Button btnDelete;
         private Button btnUpdate;
         private DataGridView dtgOrder;
+        private NumericUpDown numericQuantity;
+        private Button btnBack;
     }
 }

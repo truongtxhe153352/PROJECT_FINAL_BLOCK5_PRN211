@@ -94,6 +94,7 @@
             panel1.Controls.Add(btnProduct);
             panel1.Location = new Point(2, 0);
             panel1.Name = "panel1";
+
             panel1.Size = new Size(1344, 90);
             panel1.TabIndex = 4;
             // 

@@ -6,8 +6,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PROJECT_FINAL_BLOCK5_PRN211
@@ -54,11 +56,11 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
                              select new
                              {
                                  p.Pid,
-                                 p.Pname,
-                                 p.Pqty,
-                                 p.Pprice,
-                                 p.Pdescription,
-                                 c.Catname
+                                 ProductName = p.Pname,
+                                 Quantity = p.Pqty,
+                                 Price = p.Pprice,
+                                 Description = p.Pdescription,
+                                 CategoryName = c.Catname
                              });
 
                 dtgProduct.DataSource = query.ToList();
@@ -80,10 +82,10 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
             {
                 txtProductId.Text = dtgProduct.Rows[e.RowIndex].Cells["Pid"].Value.ToString();
                 txtProductName.Text = dtgProduct.Rows[e.RowIndex].Cells[1].Value.ToString();
-                txtQuantity.Text = dtgProduct.Rows[e.RowIndex].Cells[2].Value.ToString();
+                numericQuantity.Value = Convert.ToInt32(dtgProduct.Rows[e.RowIndex].Cells[2].Value);
                 txtPrice.Text = dtgProduct.Rows[e.RowIndex].Cells[3].Value.ToString();
                 txtDescription.Text = dtgProduct.Rows[e.RowIndex].Cells[4].Value.ToString();
-                cbCategory.Text = dtgProduct.Rows[e.RowIndex].Cells["Catname"].Value.ToString();
+                cbCategory.Text = dtgProduct.Rows[e.RowIndex].Cells[5].Value.ToString();
             }
         }
 
@@ -94,22 +96,85 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            int cate = Convert.ToInt32(cbCategory.SelectedValue);
-            using var context = new QuanLyKhoContext();
 
-            TbProduct tbProduct = new TbProduct();
+            DialogResult result = MessageBox.Show("Bạn có muốn lưu thay đổi sau khi Add không?", "Thông báo", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                // Thực hiện hành động khi người dùng chọn Yes
+                int cate = Convert.ToInt32(cbCategory.SelectedValue);
+                using var context = new QuanLyKhoContext();
+                {
+                    bool isDuplicateName = (from p in context.TbProducts
+                                            where (p.Pname == txtProductName.Text)
+                                            select p).Any();
 
-            tbProduct.Pname = txtProductName.Text;
-            tbProduct.Pprice = Convert.ToInt32(txtPrice.Text);
-            tbProduct.Pqty = Convert.ToInt32(txtQuantity.Text);
-            tbProduct.Pdescription = txtDescription.Text;
-            tbProduct.Cateid = cate;
+                    TbProduct tbProduct = new TbProduct();
 
-            context.TbProducts.Add(tbProduct);
-            context.SaveChanges();
-            MessageBox.Show("Add successfulluly!!!");
+                    if (!string.IsNullOrWhiteSpace(txtProductName.Text) && !isDuplicateName)
+                    {
+                        tbProduct.Pname = txtProductName.Text;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter a valid name");
+                        return;
+                    }
 
-            loadData();
+                    if (!Regex.IsMatch(txtPrice.Text, @"^[0-9]+$"))
+                    {
+                        MessageBox.Show("Please enter a valid Price!!");
+                        return;
+                    }
+                    else
+                    {
+                        tbProduct.Pprice = Convert.ToInt32(txtPrice.Text);
+                    }
+
+                    if (!Regex.IsMatch(numericQuantity.Text, @"^[1-9]+$"))
+                    {
+                        MessageBox.Show("Please enter a valid Quantity !!");
+                        return;
+                    }
+                    else
+                    {
+                        tbProduct.Pqty = Convert.ToInt32(numericQuantity.Value);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(txtDescription.Text))
+                    {
+                        tbProduct.Pdescription = txtDescription.Text;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter a valid Description");
+                        return;
+                    }
+                    if (cate != null)
+                    {
+                        tbProduct.Cateid = cate;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter a valid Catefory");
+                        return;
+                    }
+
+                    context.TbProducts.Add(tbProduct);
+                    context.SaveChanges();
+                    MessageBox.Show("Add successfulluly!!!");
+
+                    loadData();
+                }
+            }
+            else
+            {
+                // Thực hiện hành động khi người dùng chọn No
+                return;
+            }
+
+
+
+
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -120,7 +185,7 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
                 TbProduct tbProduct = context.TbProducts.Find(dtgProduct
                     .Rows[dtgProduct.CurrentRow.Index].Cells[0].Value);
 
-                tbProduct.Pqty = Convert.ToInt32(txtQuantity.Text);
+                tbProduct.Pqty = Convert.ToInt32(numericQuantity.Value);
                 tbProduct.Pname = txtProductName.Text.Trim();
                 tbProduct.Pprice = Convert.ToInt32(txtPrice.Text);
                 tbProduct.Pdescription = txtDescription.Text.Trim();
@@ -137,13 +202,30 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
             using (var context = new QuanLyKhoContext())
             {
-                TbProduct product = context.TbProducts.Find(dtgProduct.Rows[dtgProduct.CurrentRow.Index].Cells[0].Value);
+                DialogResult result = MessageBox.Show("Bạn có muốn lưu thay đổi không?", "Thông báo", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    // Thực hiện hành động khi người dùng chọn Yes
+                    TbProduct product = context.TbProducts.Find(dtgProduct.Rows[dtgProduct.CurrentRow.Index].Cells[0].Value);
 
-                context.TbProducts.Remove(product);
-                context.SaveChanges();
-                MessageBox.Show("Edit successful!!!");
+                    if (product != null)
+                    {
+                        context.TbProducts.Remove(product);
+                        context.SaveChanges();
+                        MessageBox.Show("Delete successful!!!");
+                        loadData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Có người đang Order sản phẩm này, không được DELETE!!!");
+                    }
+                }
+                else
+                {
+                    // Thực hiện hành động khi người dùng chọn No
+                    return;
+                }
             }
-            loadData();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -151,7 +233,7 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
             txtDescription.Clear();
             txtProductName.Clear();
             txtProductId.Clear();
-            txtQuantity.Clear();
+            numericQuantity.Value = 0;
             txtPrice.Clear();
             cbCategory.SelectedItem = null;
         }
@@ -160,21 +242,41 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
         {
             using (var context = new QuanLyKhoContext())
             {
-                var data = (from item in context.TbProducts
-                            join item1 in context.TbCategories on item.Cateid equals item1.Catid
-                            where (item.Pname.Contains(txtFilter.Text) || item1.Catname.Contains(txtFilter.Text))
-                            select new
-                            {
-                                item.Pid,
-                                item.Pname,
-                                item.Pqty,
-                                item.Pprice,
-                                item.Pdescription,
-                                item1.Catname
-                            }).ToList();
+                if (!string.IsNullOrEmpty(txtFilter.Text))
+                {
+                    var data = (from item in context.TbProducts
+                                join item1 in context.TbCategories on item.Cateid equals item1.Catid
+                                where (item.Pname.Contains(txtFilter.Text) && item1.Catname.Contains(cbCategory.Text)
+                               )
+                                select new
+                                {
+                                    item.Pid,
+                                    item.Pname,
+                                    item.Pqty,
+                                    item.Pprice,
+                                    item.Pdescription,
+                                    item1.Catname
+                                }).ToList();
 
-                dtgProduct.DataSource = data;
+                    dtgProduct.DataSource = data;
+                }
+                else
+                {
+                    loadData();
+                }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MainForm mainForm = new MainForm();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void txtPrice_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
