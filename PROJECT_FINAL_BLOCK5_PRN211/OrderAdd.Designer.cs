@@ -54,9 +54,9 @@
             label6 = new Label();
             label2 = new Label();
             dtgProduct = new DataGridView();
-            btnUpdate = new Button();
             btnOrder = new Button();
             btnClear = new Button();
+            btnBack = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgCustomer).BeginInit();
             panel2.SuspendLayout();
@@ -320,19 +320,10 @@
             dtgProduct.Name = "dtgProduct";
             dtgProduct.RowHeadersWidth = 51;
             dtgProduct.RowTemplate.Height = 29;
-            dtgProduct.Size = new Size(586, 319);
+            dtgProduct.Size = new Size(581, 341);
             dtgProduct.TabIndex = 1;
             dtgProduct.CellClick += dtgProduct_CellClick;
             dtgProduct.CellContentClick += dataGridView2_CellContentClick;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(306, 688);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(97, 49);
-            btnUpdate.TabIndex = 2;
-            btnUpdate.Text = "Update";
-            btnUpdate.UseVisualStyleBackColor = true;
             // 
             // btnOrder
             // 
@@ -352,15 +343,26 @@
             btnClear.TabIndex = 4;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(159, 688);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(105, 49);
+            btnBack.TabIndex = 5;
+            btnBack.Text = "Back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // OrderAdd
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1083, 748);
+            Controls.Add(btnBack);
             Controls.Add(btnClear);
             Controls.Add(btnOrder);
-            Controls.Add(btnUpdate);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "OrderAdd";
@@ -404,8 +406,8 @@
         private DateTimePicker dpkDateOrder;
         private TextBox txtProductName;
         private TextBox txtProductID;
-        private Button btnUpdate;
         private Button btnOrder;
         private Button btnClear;
+        private Button btnBack;
     }
 }

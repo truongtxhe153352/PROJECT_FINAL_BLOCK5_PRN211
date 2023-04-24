@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +21,38 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
 
         private void button3_Click(object sender, EventArgs e)
         {
+            using (var context = new QuanLyKhoContext())
+            {
+                DialogResult result = MessageBox.Show("Bạn có muốn lưu thay đổi không?", "Thông báo", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    // Thực hiện hành động khi người dùng chọn Yes
+                    TbOrder tbOrder = context.TbOrders.Find(dtgOrder.Rows[dtgOrder.CurrentRow.Index].Cells[0].Value);
 
+                    if (!Regex.IsMatch(numericQuantity.Text, @"^[1-9]+$"))
+                    {
+                        MessageBox.Show("vui long nhap quantity > 0");
+                        return;
+                    }
+                    else
+                    {
+                        tbOrder.Qty = Convert.ToInt32(numericQuantity.Value);
+                    }
+
+                    MessageBox.Show("Are you want to Update");
+                    context.TbOrders.Update(tbOrder);
+                    context.SaveChanges();
+                    loadData();
+                    MessageBox.Show("Update Successful!!!");
+                }
+                else
+                {
+                    // Thực hiện hành động khi người dùng chọn No
+                    return;
+                }
+
+                
+            }
         }
 
         private void OrderFrm_Load(object sender, EventArgs e)
@@ -60,7 +92,7 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
             if (e.RowIndex >= 0 && e.RowIndex < dtgOrder.Rows.Count) // kiểm tra chỉ số hàng
             {
                 txtOrderId.Text = dtgOrder.Rows[e.RowIndex].Cells[0].Value.ToString();
-                txtOrderQuantity.Text = dtgOrder.Rows[e.RowIndex].Cells[4].Value.ToString();
+                numericQuantity.Value = Convert.ToInt32(dtgOrder.Rows[e.RowIndex].Cells[4].Value);
             }
         }
 
@@ -74,9 +106,8 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
                                  join p in context.TbProducts
                      on o.Pid equals p.Pid
                                  join c in context.TbCustomers on o.Cid equals c.Cid
-                                 where p.Pname.Contains(txtSearch.Text) 
+                                 where p.Pname.Contains(txtSearch.Text)
                                  || c.Cname.Contains(txtSearch.Text)
-                                 || c.Cphone.Contains(txtSearch.Text)
                                  select new
                                  {
                                      o.Orderid,
@@ -106,19 +137,37 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            using(var context = new QuanLyKhoContext())
+            using (var context = new QuanLyKhoContext())
             {
-               TbOrder o = context.TbOrders.Find(dtgOrder.Rows[dtgOrder.CurrentRow.Index].Cells[0].Value);
-                if (o != null)
+                DialogResult result = MessageBox.Show("Bạn có muốn lưu thay đổi không?", "Thông báo", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Are you want to Delete" );
-                    context.TbOrders.Remove(o);
-                    context.SaveChanges();
-                    MessageBox.Show("Delete succeess!!!");
-                    loadData();
+                    // Thực hiện hành động khi người dùng chọn Yes
+                    TbOrder o = context.TbOrders.Find(dtgOrder.Rows[dtgOrder.CurrentRow.Index].Cells[0].Value);
+                    if (o != null)
+                    {
+                        MessageBox.Show("Are you want to Delete");
+                        context.TbOrders.Remove(o);
+                        context.SaveChanges();
+                        MessageBox.Show("Delete succeess!!!");
+                        loadData();
+                    }
                 }
+                else
+                {
+                    // Thực hiện hành động khi người dùng chọn No
+                    return;
+                }
+                
 
             }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            MainForm mainForm = new MainForm();
+            mainForm.Show();
+            this.Hide();
         }
     }
 }
