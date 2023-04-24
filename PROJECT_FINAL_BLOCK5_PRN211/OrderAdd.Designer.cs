@@ -192,6 +192,7 @@
             // 
             numericQuantity.Location = new Point(799, 300);
             numericQuantity.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericQuantity.Name = "numericQuantity";
             numericQuantity.Size = new Size(150, 27);
             numericQuantity.TabIndex = 19;
@@ -359,6 +360,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1083, 748);
             Controls.Add(btnBack);
             Controls.Add(btnClear);

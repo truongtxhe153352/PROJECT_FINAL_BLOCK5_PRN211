@@ -234,7 +234,7 @@ namespace PROJECT_FINAL_BLOCK5_PRN211
             txtProductName.Clear();
             dpkDateOrder.Value = DateTime.Now;
             txtPrice.Clear();
-            numericQuantity.Value = 0;
+            numericQuantity.Value = 1;
             txtTotal.Clear();
             txtSearchCustomer.Clear();
             txtSearchProduct.Clear();
